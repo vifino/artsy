@@ -17,6 +17,8 @@
 // Escapes.
 #define ESC "\x1B["
 #define MOVETO "%i;%iH"
+#define HIDECURSOR "?25l"
+#define SHOWCURSOR "?25h"
 
 // Other
 #define SEC 1000000
@@ -33,6 +35,8 @@ int main(int argc, char* argv[]) {
 	int h = winsz.ws_row;
 	int steps = w + h + WPL;
 
+	printf(ESC HIDECURSOR);
+
 	useconds_t sleeptime = (SECS * SEC) / (steps);
 	int p, x, y;
 	for (p = 0; p < steps; p++) {
@@ -48,7 +52,7 @@ int main(int argc, char* argv[]) {
 		usleep(sleeptime);
 	}
 
-	printf(ESC "2J" ESC "H");
+	printf(ESC "2J" ESC "H" ESC SHOWCURSOR);
 	fflush(stdout);
 
 	return 0;
